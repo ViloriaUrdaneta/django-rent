@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes</title>
+</head>
+<a href="{% url 'agregar_arriendo' %}">Agregar arriendo</a>
+<body>
+    <h1>Datos de la API</h1>
+    <ul>
+        {% for arriendo in data %}
+            <li>Cliente: {{ arriendo.cliente_nombre }} - Empresa: {{ arriendo.empresa_nombre }} - Costo Diario: {{ arriendo.costo_diario }} - Días: {{ arriendo.dias }} </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'empresas_view' %}">Ver Empresas</a>
+    <a href="{% url 'clientes_view' %}">Ver Clientes</a>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes</title>
+</head>
+<body>
+    <h1>Datos de la API</h1>
+    <form method="post" action="{% url 'clientes_view' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enviar</button>
+    </form>
+
+    <ul>
+        {% for item in data %}
+            <li>{{ item.name }} - {{ item.rut }}</li>
+            <a href="{% url 'editar_cliente' item.id %}">Editar</a>
+            <a href="{% url 'eliminar_cliente' item.id %}">Eliminar</a>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'empresas_view' %}">Ver Empresas</a>
+    <a href="{% url 'arriendos_view' %}">Ver Arriendos</a>
+</body>
+</html>

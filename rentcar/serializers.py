@@ -9,11 +9,11 @@ class ClienteSerializer(serializers.ModelSerializer):
 class EmpresaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Empresa
-        fiels = ('id', 'name')
+        fields = ('id', 'name')
         
 
 class ArriendoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Arriendo
-        fiels = ('id_cliente', 'id_empresa', 'costo_diario', 'dias')
+        fields = ('id_cliente', 'id_empresa', 'costo_diario', 'dias', 'fecha')
         
