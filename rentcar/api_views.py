@@ -1,10 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.db.models import Sum
 from rentcar.serializers import ArriendoSerializer
+from rentcar.utils import get_client_ids, getClientSortByLastName, getClientsSortByAmount, getClientsSortByRentExpenses, getClientsWithLessExpense, getCompaniesSortByProfits, getCompaniesWithRentsOver1Week, getCompanyClientsSortByName, newClientRanking
 from .models import Arriendo
-from django.db.models import F, ExpressionWrapper, DecimalField
+from django.db.models import F, ExpressionWrapper, DecimalField, Sum
 from django.db.models.functions import Coalesce
 from datetime import datetime
     
@@ -106,3 +106,66 @@ class ClienteMenorArriendosAPIView(APIView):
         }
 
         return Response(data, status=status.HTTP_200_OK)
+    
+    
+class ListaClientesAPIView(APIView):
+
+    def get(self, request):
+        cliente_ids = get_client_ids()
+        return Response(cliente_ids, status=status.HTTP_200_OK)
+    
+    
+class ListaClientesPorApellidoAPIView(APIView):
+
+    def get(self, request):
+        task = getClientSortByLastName()
+        return Response(task, status=status.HTTP_200_OK)
+    
+    
+class ListaClientesPorGastoTotalAPIView(APIView):
+
+    def get(self, request):
+        task = getClientsSortByRentExpenses()
+        return Response(task, status=status.HTTP_200_OK)
+    
+
+class ListaClientesPorEmpresaAPIView(APIView):
+
+    def get(self, request):
+        task = getCompanyClientsSortByName()
+        return Response(task, status=status.HTTP_200_OK)
+
+
+class ListaClientesPorTotalPorEmpresaAPIView(APIView):
+
+    def get(self, request, id_empresa=None):
+        task = getClientsSortByAmount(id_empresa)
+        return Response(task, status=status.HTTP_200_OK)    
+
+
+class ListaCompaniasPorTotalAPIView(APIView):
+
+    def get(self, request):
+        task = getCompaniesSortByProfits()
+        return Response(task, status=status.HTTP_200_OK)
+    
+
+class ListaEmpresasMasUnaSemanaAPIView(APIView):
+
+    def get(self, request):
+        task = getCompaniesWithRentsOver1Week()
+        return Response(task, status=status.HTTP_200_OK)
+    
+
+class ListaEmpresasPeorClienteAPIView(APIView):
+
+    def get(self, request):
+        task = getClientsWithLessExpense()
+        return Response(task, status=status.HTTP_200_OK)
+    
+    
+class RankingNuevoClienteAPIView(APIView):
+
+    def get(self, request):
+        task = newClientRanking()
+        return Response(task, status=status.HTTP_200_OK)

@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework import routers
 from .api import ClienteViewSet, EmpresaViewSet, ArriendoViewSet
 from .views import clientes_view, editar_cliente_view, eliminar_cliente, empresas_view, editar_empresa_view, eliminar_empresa, arriendos_view, agregar_arriendo
-from .api_views import ClienteMasArriendosAPIView, ClienteMenorArriendosAPIView, TotalAPIView
+from .api_views import ClienteMasArriendosAPIView, ClienteMenorArriendosAPIView, ListaClientesAPIView, ListaClientesPorApellidoAPIView, ListaClientesPorEmpresaAPIView, ListaClientesPorGastoTotalAPIView, ListaClientesPorTotalPorEmpresaAPIView, ListaCompaniasPorTotalAPIView, ListaEmpresasMasUnaSemanaAPIView, ListaEmpresasPeorClienteAPIView, RankingNuevoClienteAPIView, TotalAPIView
 
 router = routers.DefaultRouter()
 
@@ -26,5 +26,14 @@ urlpatterns = [
     path('api/mayorcliente/<int:month>/<int:empresa>/', ClienteMasArriendosAPIView.as_view(), name='mayor_api_empresa'),
     path('api/menorcliente/<int:month>/', ClienteMenorArriendosAPIView.as_view(), name='menor_api'),
     path('api/menorcliente/<int:month>/<int:empresa>/', ClienteMenorArriendosAPIView.as_view(), name='menor_api_empresa'),
+    path('api/clientes/ids/', ListaClientesAPIView.as_view(), name='clientes_ids'),
+    path('api/clientes/bylastname/', ListaClientesPorApellidoAPIView.as_view(), name='clientes_lastnames'),
+    path('api/clientes/byrent/', ListaClientesPorGastoTotalAPIView.as_view(), name='clientes_rents'),
+    path('api/clientes/bycompany/', ListaClientesPorEmpresaAPIView.as_view(), name='clientes_companies'),
+    path('api/clientes/byexpenseandcompany/<int:id_empresa>/', ListaClientesPorTotalPorEmpresaAPIView.as_view(), name='clientes_rentsandcompanies'),
+    path('api/empresas/byrent/', ListaCompaniasPorTotalAPIView.as_view(), name='companies_rents'),
+    path('api/empresas/morethanoneweek/', ListaEmpresasMasUnaSemanaAPIView.as_view(), name='companies_more_one_week'),
+    path('api/empresas/worstclient/', ListaEmpresasPeorClienteAPIView.as_view(), name='companies_worst_client'),
+    path('api/clientes/newclientranking/', RankingNuevoClienteAPIView.as_view(), name='clientes_companies'),
     path('', include(router.urls)),
 ]
