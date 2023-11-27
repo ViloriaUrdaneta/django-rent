@@ -32,3 +32,6 @@ class ArriendoForm(forms.ModelForm):
             empty_label="Seleccione una empresa"
         )
         self.fields['id_empresa'].label = 'Empresa'
+        
+class SeleccionarEmpresaForm(forms.Form):
+    empresas = forms.ModelChoiceField(queryset=Empresa.objects.all(), empty_label="Selecciona una empresa")
