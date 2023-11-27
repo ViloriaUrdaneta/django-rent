@@ -7,6 +7,7 @@ from .models import Arriendo
 from django.db.models import F, ExpressionWrapper, DecimalField, Sum
 from django.db.models.functions import Coalesce
 from datetime import datetime
+from rest_framework.decorators import action
     
 
 class TotalAPIView(APIView):

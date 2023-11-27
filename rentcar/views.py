@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 import requests
-
+from .chart import generar_grafico
 from rentcar.models import Arriendo, Cliente, Empresa
-from .forms import ClienteForm, EmpresaForm, ArriendoForm
+from .forms import ClienteForm, EmpresaForm, ArriendoForm, SeleccionarEmpresaForm
 
 
 def clientes_view(request):
@@ -105,4 +105,16 @@ def agregar_arriendo(request):
     return render(request, 'agregar_arriendo.html', {'form': formulario_arriendo})
 
 
+def graficos(request):
+    grafico =  generar_grafico()
+    
+    context = {'grafico': grafico}
+    
+    return render(request, 'graficos.html', context)
 
+
+def botonera_view(request):
+    empresas = Empresa.objects.all() 
+    formulario_empresa = SeleccionarEmpresaForm()
+    context = {'formulario_empresa': formulario_empresa, 'empresas': empresas}
+    return render(request, 'botonera.html', context)

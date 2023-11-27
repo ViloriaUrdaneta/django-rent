@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Botonera</title>
+</head>
+<body>
+    <h1>Botonera</h1>
+    <ul>
+        <li><a href="{% url 'clientes_ids' %}">Clientes por IDs</a></li>
+        <li><a href="{% url 'clientes_lastnames' %}">Clientes por Apellido</a></li>
+        <li><a href="{% url 'clientes_rents' %}">Clientes por Gasto Total</a></li>
+        <li><a href="{% url 'clientes_companies' %}">Clientes por Empresa</a></li>
+        <li>
+            <form method="get" action="{% url 'clientes_rentsandcompanies' id_empresa=id_empresa %}">
+                <select name="id_empresa">
+                    {% for empresa in empresas %}
+                        <option value="{{ empresa.id }}">{{ empresa.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Ver Clientes por Gasto y Empresa</button>
+            </form>
+        </li>
+        <li><a href="{% url 'companies_rents' %}">Empresas por Gasto Total</a></li>
+        <li><a href="{% url 'companies_more_one_week' %}">Empresas con Arriendos de más de una semana</a></li>
+        <li><a href="{% url 'companies_worst_client' %}">Empresas con Peor Cliente</a></li>
+    </ul>
+</body>
+</html>
